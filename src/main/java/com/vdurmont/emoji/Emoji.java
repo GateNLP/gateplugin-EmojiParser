@@ -69,10 +69,10 @@ public class Emoji {
    * @return concatenated String
    */
   private String stringJoin(String[] array, int count){
-    String joined = "";
+    StringBuilder joined = new StringBuilder();
     for(int i = 0; i < count; i++)
-      joined += array[i];
-    return joined;
+      joined.append(array[i]);
+    return joined.toString();
   }
 
   /**
