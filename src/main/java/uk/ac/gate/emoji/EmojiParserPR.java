@@ -33,7 +33,7 @@ public class EmojiParserPR extends AbstractLanguageAnalyser {
 					features.put("fitzpatrickUnicode", emoji.getFitzpatrickUnicode());
 				}
 				
-				document.getAnnotations().add((long)emoji.getEmojiStartIndex(),(long)emoji.getEmojiEndIndex(),"Emoji", features);
+				document.getAnnotations().add((long)emoji.getEmojiStartIndex(),(long)emoji.getFitzpatrickEndIndex(),"Emoji", features);
 			} catch (InvalidOffsetException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
