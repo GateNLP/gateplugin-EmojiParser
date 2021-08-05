@@ -53,13 +53,13 @@ public class EmojiTrie {
    * @see #isEmoji(char[])
    */
   public Matches isEmoji(char[] sequence, int start, int end) {
+    if (sequence == null) {
+      return Matches.POSSIBLY;
+    }
+
     if (start < 0 || start > end || end > sequence.length) {
       throw new ArrayIndexOutOfBoundsException(
               "start " + start + ", end " + end + ", length " + sequence.length);
-    }
-
-    if (sequence == null) {
-      return Matches.POSSIBLY;
     }
 
     Node tree = root;

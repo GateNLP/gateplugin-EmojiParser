@@ -26,8 +26,8 @@ public class EmojiManager {
   static final EmojiTrie EMOJI_TRIE;
 
   static {
-    try {
-      InputStream stream = EmojiLoader.class.getResourceAsStream(PATH);
+    try (InputStream stream = EmojiLoader.class.getResourceAsStream(PATH)) {
+      
       List<Emoji> emojis = EmojiLoader.loadEmojis(stream);
       ALL_EMOJIS = emojis;
       for (Emoji emoji : emojis) {
@@ -48,7 +48,6 @@ public class EmojiManager {
           return e2.getUnicode().length() - e1.getUnicode().length();
         }
       });
-      stream.close();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
