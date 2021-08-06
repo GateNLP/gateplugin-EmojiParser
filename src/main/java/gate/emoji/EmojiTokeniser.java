@@ -110,17 +110,19 @@ public class EmojiTokeniser extends AbstractLanguageAnalyser {
 
 			if (fixTokens) {
 				// remove any existing tokens over the span as we'll replace these later
-				inputAS.removeAll(removableAnnots.getContained(start, end));
+				if (inputAS.removeAll(removableAnnots.getContained(start, end))) {
 
-				FeatureMap tokFeatures = Utils.featureMap("length", String.valueOf(end - start), "kind", "symbol",
-						"category", "UH", "emoji_base", candidate.getEmoji().getUnicode(), "kind", "symbol", "category",
-						"UH", "emoji_description", candidate.getEmoji().getDescription(), "emoji_aliases",
-						candidate.getEmoji().getAliases(), "emoji_tags", candidate.getEmoji().getTags());
+					FeatureMap tokFeatures = Utils.featureMap("length", String.valueOf(end - start), "kind", "symbol",
+							"category", "UH", "emoji_base", candidate.getEmoji().getUnicode(), "kind", "symbol",
+							"category", "UH", "emoji_description", candidate.getEmoji().getDescription(),
+							"emoji_aliases", candidate.getEmoji().getAliases(), "emoji_tags",
+							candidate.getEmoji().getTags());
 
-				tokFeatures.putAll(features);
+					tokFeatures.putAll(features);
 
-				// create the new Token annotation
-				Utils.addAnn(inputAS, start, end, "Token", tokFeatures);
+					// create the new Token annotation
+					Utils.addAnn(inputAS, start, end, "Token", tokFeatures);
+				}
 			}
 
 			if (createAnnotations) {
