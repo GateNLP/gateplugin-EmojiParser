@@ -421,7 +421,7 @@ public class EmojiParser {
    * @param input String to find all unicode emojis in
    * @return List of UnicodeCandidates for each unicode emote in text
    */
-  public static List<UnicodeCandidate> getUnicodeCandidates(String input) {
+  protected static List<UnicodeCandidate> getUnicodeCandidates(String input) {
     char[] inputCharArray = input.toCharArray();
     List<UnicodeCandidate> candidates = new ArrayList<UnicodeCandidate>();
     UnicodeCandidate next;
