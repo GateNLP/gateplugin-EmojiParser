@@ -494,10 +494,13 @@ public class EmojiParser {
     private final Emoji emoji;
     private final Fitzpatrick fitzpatrick;
     private final int startIndex;
+    private final Variant variant;
 
     private UnicodeCandidate(Emoji emoji, String fitzpatrick, int startIndex) {
       this.emoji = emoji;
       this.fitzpatrick = Fitzpatrick.fitzpatrickFromUnicode(fitzpatrick);
+      this.variant = fitzpatrick == null ? Variant.getVariantFromString(fitzpatrick) : null;
+      
       this.startIndex = startIndex;
     }
 
@@ -511,6 +514,10 @@ public class EmojiParser {
 
     public Fitzpatrick getFitzpatrick() {
       return fitzpatrick;
+    }
+    
+    public Variant getVariant() {
+    	return variant;
     }
 
     public String getFitzpatrickType() {
@@ -526,7 +533,7 @@ public class EmojiParser {
     }
 
     public int getEmojiEndIndex() {
-      return startIndex + emoji.getUnicode().length();
+      return startIndex + emoji.getUnicode().length() + (variant != null ? 1 : 0);
     }
 
     public int getFitzpatrickEndIndex() {

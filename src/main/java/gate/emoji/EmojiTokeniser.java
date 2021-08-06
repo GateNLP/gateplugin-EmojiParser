@@ -1,8 +1,12 @@
 package gate.emoji;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,7 @@ import org.slf4j.event.Level;
 import com.vdurmont.emoji.EmojiParser;
 
 import gate.AnnotationSet;
+import gate.Factory;
 import gate.FeatureMap;
 import gate.Utils;
 import gate.creole.AbstractLanguageAnalyser;

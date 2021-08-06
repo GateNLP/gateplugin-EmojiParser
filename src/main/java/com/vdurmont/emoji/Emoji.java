@@ -2,7 +2,9 @@ package com.vdurmont.emoji;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class represents an emoji.<br>
@@ -43,7 +45,8 @@ public class Emoji {
 
     int count = 0;
     try {
-      this.unicode = new String(bytes, "UTF-8");
+      this.unicode = Variant.stripVariant(bytes);
+      
       int stringLength = getUnicode().length();
       String[] pointCodes = new String[stringLength];
       String[] pointCodesHex = new String[stringLength];
