@@ -13,12 +13,12 @@
 	</parent>
 
 	<groupId>uk.ac.gate.plugins</groupId>
-	<artifactId>emoji-parser</artifactId>
+	<artifactId>emoji-tokeniser</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>emoji-parser</name>
-	<description>Emoji Parsing Support for GATE</description>
+	<description>Emoji Tokenization Support for GATE</description>
 
 	<developers>
 		<developer>

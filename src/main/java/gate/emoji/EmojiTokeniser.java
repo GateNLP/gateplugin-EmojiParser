@@ -1,4 +1,4 @@
-package uk.ac.gate.emoji;
+package gate.emoji;
 
 import java.util.Arrays;
 import java.util.HashSet;
