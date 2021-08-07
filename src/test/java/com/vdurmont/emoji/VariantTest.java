@@ -2,8 +2,6 @@ package com.vdurmont.emoji;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.regex.Pattern;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -23,6 +21,10 @@ public class VariantTest {
 		// 1F468 200D 2695 FE0F
 		assertEquals(Variant.TEXT, Variant.getVariantFromEmoji("👨‍⚕︎"));
 		
+		// make sure we get null when there is no variant
 		assertEquals(null, Variant.getVariantFromString("Testing"));
+
+		// make sure we get null when we pass in null
+		assertEquals(null, Variant.getVariantFromString(null));
 	}
 }

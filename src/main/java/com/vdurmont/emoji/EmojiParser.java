@@ -448,6 +448,10 @@ public class EmojiParser {
         String fitzpatrickString = (emojiEnd + 2 <= chars.length) ?
                 new String(chars, emojiEnd, 2) :
                 null;
+
+        if (fitzpatrickString == null && (emojiEnd + 1 <= chars.length))
+                fitzpatrickString = new String(chars, emojiEnd, 1);
+
         return new UnicodeCandidate(
                 emoji,
                 fitzpatrickString,
@@ -499,8 +503,8 @@ public class EmojiParser {
     private UnicodeCandidate(Emoji emoji, String fitzpatrick, int startIndex) {
       this.emoji = emoji;
       this.fitzpatrick = Fitzpatrick.fitzpatrickFromUnicode(fitzpatrick);
-      this.variant = fitzpatrick == null ? Variant.getVariantFromString(fitzpatrick) : null;
-      
+      this.variant = (this.fitzpatrick == null ? Variant.getVariantFromString(fitzpatrick) : null);
+
       this.startIndex = startIndex;
     }
 
@@ -525,7 +529,7 @@ public class EmojiParser {
     }
 
     public String getFitzpatrickUnicode() {
-      return hasFitzpatrick() ? fitzpatrick.unicode : "";
+      return hasFitzpatrick() ? fitzpatrick.unicode : (variant != null ? variant.unicode : "");
     }
 
     public int getEmojiStartIndex() {
@@ -533,11 +537,11 @@ public class EmojiParser {
     }
 
     public int getEmojiEndIndex() {
-      return startIndex + emoji.getUnicode().length() + (variant != null ? 1 : 0);
+      return startIndex + emoji.getUnicode().length();
     }
 
     public int getFitzpatrickEndIndex() {
-      return getEmojiEndIndex() + (fitzpatrick != null ? 2 : 0);
+      return getEmojiEndIndex() + (fitzpatrick != null ? 2 : (variant != null ? 1 : 0));
     }
   }
 
