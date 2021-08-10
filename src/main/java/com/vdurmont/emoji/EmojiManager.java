@@ -133,7 +133,7 @@ public class EmojiManager {
     EmojiParser.UnicodeCandidate unicodeCandidate = EmojiParser.getNextUnicodeCandidate(string.toCharArray(), 0);
     return unicodeCandidate != null &&
             unicodeCandidate.getEmojiStartIndex() == 0 &&
-            unicodeCandidate.getFitzpatrickEndIndex() == string.length();
+            unicodeCandidate.getRawString().equals(string);
   }
 
   /**

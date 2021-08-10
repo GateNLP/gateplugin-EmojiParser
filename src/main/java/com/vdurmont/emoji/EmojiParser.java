@@ -452,11 +452,24 @@ public class EmojiParser {
         if (fitzpatrickString == null && (emojiEnd + 1 <= chars.length))
                 fitzpatrickString = new String(chars, emojiEnd, 1);
 
-        return new UnicodeCandidate(
-                emoji,
-                fitzpatrickString,
-                i
-        );
+			UnicodeCandidate candidate = new UnicodeCandidate(emoji, fitzpatrickString, i,null);
+			
+			if (chars.length >= candidate.getFitzpatrickEndIndex()+1 && chars[candidate.getFitzpatrickEndIndex()] == '\u200D') {
+				
+				UnicodeCandidate next = getNextUnicodeCandidate(chars, candidate.getFitzpatrickEndIndex()+1);
+				
+				if (next != null) {
+					Emoji combined = EmojiManager.getByUnicode(emoji.getUnicode() +"\u200D"+next.emoji.getUnicode());
+					
+					if (combined != null) {
+						//TODO will the resulting length always be correct?
+						candidate = new UnicodeCandidate(combined, fitzpatrickString, i,candidate.getRawString()+"\u200D"+next.getRawString());
+					}
+				}
+				
+			}
+			
+			return candidate;
       }
     }
 
@@ -499,13 +512,19 @@ public class EmojiParser {
     private final Fitzpatrick fitzpatrick;
     private final int startIndex;
     private final Variant variant;
+    private final String raw;
 
-    private UnicodeCandidate(Emoji emoji, String fitzpatrick, int startIndex) {
+    private UnicodeCandidate(Emoji emoji, String fitzpatrick, int startIndex, String raw) {
       this.emoji = emoji;
       this.fitzpatrick = Fitzpatrick.fitzpatrickFromUnicode(fitzpatrick);
       this.variant = (this.fitzpatrick == null ? Variant.getVariantFromString(fitzpatrick) : null);
 
       this.startIndex = startIndex;
+      
+      if (raw != null)
+    	  this.raw = raw;
+      else
+    	  this.raw = emoji.getUnicode() + (this.fitzpatrick != null ? this.fitzpatrick.unicode : (this.variant != null ? this.variant.unicode : ""));
     }
 
     public Emoji getEmoji() {
@@ -542,6 +561,10 @@ public class EmojiParser {
 
     public int getFitzpatrickEndIndex() {
       return getEmojiEndIndex() + (fitzpatrick != null ? 2 : (variant != null ? 1 : 0));
+    }
+    
+    public String getRawString() {
+    	return raw;
     }
   }
 
